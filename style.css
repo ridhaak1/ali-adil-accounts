@@ -4,63 +4,87 @@
   box-sizing: border-box;
 }
 
+:root {
+  --gold:      #c9a84c;
+  --gold-soft: rgba(201, 168, 76, 0.18);
+  --gold-ring: rgba(201, 168, 76, 0.28);
+}
+
 body {
   font-family: 'Cairo', sans-serif;
-  background: #f7f3ee;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 16px;
+  padding: 32px 18px;
+  background-color: #0b0c10;
 }
 
-/* ── Container ── */
-.container {
+/* ── Animated canvas background ── */
+#bg {
+  position: fixed;
+  inset: 0;
   width: 100%;
-  max-width: 400px;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Page wrapper ── */
+.page {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
   text-align: center;
 }
 
 /* ── Profile ── */
 .profile {
-  margin-bottom: 32px;
+  margin-bottom: 38px;
+  animation: fadeUp 0.65s ease both;
 }
 
 .avatar {
-  width: 80px;
-  height: 80px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: #fff;
-  font-size: 2rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 18px;
-  box-shadow: 0 4px 18px rgba(102, 126, 234, 0.35);
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 20px;
+  box-shadow:
+    0 0 0 3px var(--gold-ring),
+    0 0 0 7px rgba(201, 168, 76, 0.08),
+    0 10px 36px rgba(201, 168, 76, 0.28);
 }
 
 .name {
-  font-size: 1.75rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin-bottom: 6px;
-  letter-spacing: -0.3px;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.4px;
+  margin-bottom: 11px;
 }
 
-.subtitle {
-  font-size: 0.92rem;
-  color: #999;
-  font-weight: 400;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-ring);
+  color: var(--gold);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 5px 15px 5px 12px;
+  border-radius: 50px;
 }
 
 /* ── Buttons ── */
 .links {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 40px;
+  gap: 11px;
+  margin-bottom: 44px;
 }
 
 .btn {
@@ -69,44 +93,64 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  padding: 15px 20px;
-  border-radius: 16px;
+  gap: 13px;
+  padding: 15px 22px;
+  border-radius: 15px;
   text-decoration: none;
   font-family: 'Cairo', sans-serif;
   font-size: 1rem;
   font-weight: 600;
-  color: #fff;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  color: #ececec;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.085);
+  transition:
+    background  0.22s ease,
+    border-color 0.22s ease,
+    box-shadow   0.22s ease,
+    transform    0.18s ease;
   -webkit-tap-highlight-color: transparent;
+  animation: fadeUp 0.6s ease both;
 }
 
+#b1 { animation-delay: 0.10s; }
+#b2 { animation-delay: 0.18s; }
+#b3 { animation-delay: 0.26s; }
+#b4 { animation-delay: 0.34s; }
+#b5 { animation-delay: 0.42s; }
+
 .btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.09);
+  transform: translateY(-2px);
 }
 
 .btn:active {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+  transform: translateY(0);
 }
 
-.btn-icon {
-  font-size: 1.15rem;
-  line-height: 1;
+/* Brand glow on hover */
+#b1:hover { border-color: rgba(37,  211, 102, 0.4); box-shadow: 0 6px 26px rgba(37,  211, 102, 0.18); }
+#b2:hover { border-color: rgba(34,  158, 217, 0.4); box-shadow: 0 6px 26px rgba(34,  158, 217, 0.18); }
+#b3:hover { border-color: rgba(220, 39,  67,  0.4); box-shadow: 0 6px 26px rgba(220, 39,  67,  0.18); }
+#b4:hover { border-color: rgba(24,  119, 242, 0.4); box-shadow: 0 6px 26px rgba(24,  119, 242, 0.18); }
+#b5:hover { border-color: rgba(254, 44,  85,  0.4); box-shadow: 0 6px 26px rgba(254, 44,  85,  0.18); }
+
+.btn .icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
-.btn-whatsapp  { background: #25D366; box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3); }
-.btn-phone     { background: #4A90D9; box-shadow: 0 4px 14px rgba(74, 144, 217, 0.3); }
-.btn-instagram { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); box-shadow: 0 4px 14px rgba(220, 39, 67, 0.3); }
-.btn-facebook  { background: #1877F2; box-shadow: 0 4px 14px rgba(24, 119, 242, 0.3); }
+.btn .icon svg {
+  width: 22px;
+  height: 22px;
+}
 
 /* Ripple */
 .ripple {
   position: absolute;
-  width: 16px;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.45);
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.22);
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
   animation: ripple-out 0.55s ease-out forwards;
@@ -115,21 +159,33 @@ body {
 
 @keyframes ripple-out {
   to {
-    transform: translate(-50%, -50%) scale(18);
+    transform: translate(-50%, -50%) scale(24);
     opacity: 0;
   }
 }
 
 /* ── Footer ── */
 .footer {
-  color: #c5bdb5;
-  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 0.77rem;
   font-weight: 300;
+}
+
+/* ── Entry animation ── */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ── Responsive ── */
 @media (max-width: 360px) {
-  .name    { font-size: 1.5rem; }
-  .btn     { padding: 14px 16px; font-size: 0.95rem; }
-  .avatar  { width: 70px; height: 70px; font-size: 1.7rem; }
+  .name   { font-size: 1.7rem; }
+  .avatar { width: 80px; height: 80px; }
+  .btn    { padding: 14px 16px; font-size: 0.94rem; }
 }
